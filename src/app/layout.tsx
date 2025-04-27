@@ -1,9 +1,9 @@
 
 import type { Metadata } from "next";
 import StoreProvider from "@/shared/providers/store-provider";
-import "./globals.scss";
 import Header from "@/shared/ui/header";
 import { Orbitron  } from "next/font/google";
+import "./globals.scss";
 
 export const metadata: Metadata = {
   title: "Artistry.AI",
