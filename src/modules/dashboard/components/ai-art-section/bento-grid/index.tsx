@@ -1,10 +1,12 @@
 'use client';
 
-import { Box, CircularProgress, Dialog, IconButton } from '@mui/material';
 import { useEffect, useState } from 'react';
-import ZoomInIcon from '@mui/icons-material/ZoomIn'; // <-- This icon for hover
-import CloseIcon from '@mui/icons-material/Close'; // <-- To close dialog
-
+import { Box, Button, CircularProgress, Dialog, IconButton } from '@mui/material';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import CloseIcon from '@mui/icons-material/Close';
+import { SCROLL_PRELOAD_OFFSET } from '@/shared/constants/app-constants';
+import DownloadIcon from "@mui/icons-material/Download";
+import styles from "./bento-grid.module.scss";
 interface ImageItem {
   image: string;
 }
@@ -14,6 +16,8 @@ export default function BentoGridWithSSE() {
   const [visibleImages, setVisibleImages] = useState<ImageItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isDownloading, setIsDownloading] = useState<boolean>(false);
+
   const batchSize = 9;
 
   useEffect(() => {
@@ -46,17 +50,12 @@ export default function BentoGridWithSSE() {
   }, [allImages]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 280) {
-        setVisibleImages((prev) => {
-          const nextBatch = allImages.slice(prev.length, prev.length + batchSize);
-          return [...prev, ...nextBatch];
-        });
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - SCROLL_PRELOAD_OFFSET) {
+      setVisibleImages((prev) => {
+        const nextBatch = allImages.slice(prev.length, prev.length + batchSize);
+        return [...prev, ...nextBatch];
+      });
+    }
   }, [allImages]);
 
   if (loading && visibleImages.length === 0) {
@@ -67,6 +66,32 @@ export default function BentoGridWithSSE() {
     );
   }
 
+  const handleDownload = async () => {
+    if (!selectedImage) return;
+  
+    setIsDownloading(true);
+  
+    try {
+      const response = await fetch(selectedImage, { mode: 'cors' });
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+  
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'artistry.ai-image.png';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  
+      URL.revokeObjectURL(url); // Cleanup
+    } catch (error) {
+      console.error('Failed to download image:', error);
+    }
+  
+    setIsDownloading(false);
+  };
+
+  
   return (
     <>
       <Box
@@ -176,6 +201,15 @@ export default function BentoGridWithSSE() {
             }}
           />
         )}
+        <Button
+          variant="contained"
+          disableElevation
+          className={styles["download-button"]}
+          onClick={handleDownload}
+          startIcon={<DownloadIcon />}
+        >
+          {isDownloading ? "Downloading...." : "Download"}
+        </Button>
       </Dialog>
     </>
   );

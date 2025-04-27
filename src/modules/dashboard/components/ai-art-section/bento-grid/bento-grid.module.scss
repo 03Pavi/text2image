@@ -1,0 +1,10 @@
+.download-button {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    width: 200px;
+    transform: translateX(-50%);
+    z-index: 1;
+    color:var(--global-color-primary) !important;
+    background-color: var(--global-color-text) !important;
+  }
