@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Button, Dialog, IconButton, InputBase } from "@mui/material";
+import { Box, Button, CircularProgress, Dialog, IconButton, InputBase } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import DownloadIcon from "@mui/icons-material/Download";
 import { placeholderList } from "./plaholder-list";
@@ -13,6 +13,7 @@ const Input = () => {
     const [generatedImageUrl, setGeneratedImageUrl] = useState<string>("");
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [isDownloading,setIsDownloading]=useState<boolean>(false);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -51,10 +52,12 @@ const Input = () => {
     };
 
     const handleDownload = () => {
+        setIsDownloading(true);
         const link = document.createElement("a");
         link.href = generatedImageUrl;
         link.download = "artistry.ai-image.png";
         link.click();
+        setIsDownloading(false);
     };
 
     return (
@@ -72,16 +75,17 @@ const Input = () => {
                     }}
                 />
                 <Button
+                    color="inherit"
                     variant="contained"
                     className={styles["input-button"]}
                     onClick={generatedImageUrl ? handleOpenDialog : handleGenerate}
                     disabled={loading}
                 >
                     {!loading && generatedImageUrl ? (
-                        <RemoveRedEyeIcon sx={{ mr:1,mb:.5 }}  fontSize="small"/>
+                        <RemoveRedEyeIcon sx={{ mr: 1, mb: .5 }} fontSize="small" />
                     ) : null}
                     {loading
-                        ? "Loading..."
+                        ?<Box sx={{ display:"flex", alignItems:"center", color:"var(--global-color-text)"}}> <CircularProgress size={18} color="inherit" /> &nbsp; Generating</Box>
                         : generatedImageUrl
                             ? "Preview"
                             : "+  Generate"}
@@ -134,7 +138,7 @@ const Input = () => {
                             onClick={handleDownload}
                             startIcon={<DownloadIcon />}
                         >
-                            Download Image
+                           {isDownloading ? "Downloading...." : "Download"}
                         </Button>
                     </Box>
                 )}
