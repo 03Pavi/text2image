@@ -3,14 +3,21 @@ import type { Metadata } from "next";
 import StoreProvider from "@/shared/providers/store-provider";
 import "./globals.scss";
 import Header from "@/shared/ui/header";
+import { Orbitron  } from "next/font/google";
 
 export const metadata: Metadata = {
-  title: "Next project",
-  description: "A Sample Next.js project with scalable modular structure",
+  title: "Artistry.AI",
+  description: "Text to image with AI Art Generator",
   icons: {
-    icon: "/app-logo.png",
+    icon: "/favicon.ico",
   },
 };
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  weight: ['400', '700','600','500'],
+  display: 'swap',
+});
 
 export default function RootLayout({
   children,
@@ -18,10 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={orbitron.className}>
       <body suppressHydrationWarning={true}>
         <StoreProvider>
-          <Header />{children}</StoreProvider>
+          <Header />
+          {children}
+        </StoreProvider>
       </body>
     </html>
   );

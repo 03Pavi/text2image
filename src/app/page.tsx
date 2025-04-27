@@ -1,15 +1,16 @@
 
 'use client'
-import { SwitchLanguage } from '@/shared/ui'
-import { useTranslation } from 'react-i18next'
+import AIArtSection from '@/modules/dashboard/components/ai-art-section'
+import HeroSection from '@/modules/dashboard/components/hero-section'
+import QuoteSection from '@/modules/dashboard/components/quote-section'
 
 const Page = () => {
-  const { t } = useTranslation()
   return (
-    <div>
-      Welcome to {t('AppName')}
-      <SwitchLanguage />
-    </div>
+    <>
+    <HeroSection/>
+    <AIArtSection/>
+    <QuoteSection/>
+    </>
   )
 }
 

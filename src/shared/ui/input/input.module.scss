@@ -1,0 +1,66 @@
+.input-wrapper {
+  width: 70%;
+  height: max(60px, 2.083vw);
+  background-color: var(--global-color-primary);
+  border-radius: max(40px, 1.041vw);
+  padding: 6px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  @media (max-width: 768px) {
+    width: 80%;
+  }
+  .input-field {
+    flex: 1;
+    height: 100%;
+    min-width: 64px;
+    border-radius: 40px;
+    border: 1px solid var(--global-color-secondary);
+    padding: 12px;
+    box-sizing: border-box;
+    font-size: max(16px, 0.729vw);
+    @media (max-width: 768px) {
+      min-width: 100%;
+      flex: 0;
+    }
+  }
+  .input-button {
+    flex: 1;
+    height: 100%;
+    max-width: max-content;
+    border-radius: 40px;
+    background-color: var(--global-color-secondary);
+    letter-spacing: 1px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: max(14px, 0.529vw);
+    &:hover {
+      background-color: var(--global-color-secondary-hover);
+    }
+    @media (max-width: 768px) {
+      min-width: 100%;
+      flex: 0;
+    }
+  }
+}
+
+.download-button {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  background-color: transparent !important;
+}
+.close-icon-button {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  color: white;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}

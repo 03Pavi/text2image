@@ -1,0 +1,42 @@
+.ai-art-section {
+  width: 100%;
+  height: auto;
+  display: flex;
+  padding: 20px 0;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/images/shapes-bg2-image.svg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(10px);
+  @media (max-width: 768px) {
+    background-image: url("/images/shapes-bg-image.svg");
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.768);
+    z-index: 1;
+  }
+  & > * {
+    color:var(--global-color-primary);
+    z-index: 2;
+  }
+  .ai-art-section-title {
+    font-size: max(28px, 3.64vw);
+    font-weight: var(--font-weight-regular);
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+  }
+}
+

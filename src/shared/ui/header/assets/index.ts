@@ -1,2 +1,2 @@
-import AppLogo from "./app-logo.svg"
+import AppLogo from "./app-logo.png"
 export { AppLogo }
